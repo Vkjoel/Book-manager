@@ -1,0 +1,12 @@
+{
+  "name": "Book Manager",
+  "version": "1.0",
+  "slug": "book_manager",
+  "description": "Een oplossing voor het beheren van boeken met barcodescans",
+  "startup": "application",
+  "boot": "auto",
+  "ports": {
+    "8000/tcp": 8000
+  },
+  "schema": {}
+}
