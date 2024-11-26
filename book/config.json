@@ -1,8 +1,8 @@
 {
   "name": "Book Manager",
   "version": "1.0",
-  "slug": "book_manager",
-  "description": "Een oplossing voor het beheren van boeken met barcodescans",
+  "slug": "book",
+  "description": "Beheer je boeken via Home Assistant",
   "startup": "application",
   "boot": "auto",
   "ports": {
