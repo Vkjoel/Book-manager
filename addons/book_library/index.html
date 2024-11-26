@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library Scanner</title>
+</head>
+<body>
+    <h1>Book Library Scanner</h1>
+    <p>Scan a barcode using your phone's camera to add a book to the library.</p>
+    <form id="barcodeForm" enctype="multipart/form-data">
+        <label for="barcodeImage">Upload Barcode Image:</label>
+        <input type="file" id="barcodeImage" name="file" accept="image/*" required>
+        <button type="submit">Scan</button>
+    </form>
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+        document.getElementById('barcodeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('barcodeImage');
+            formData.append('file', fileInput.files[0]);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Scanning...';
+
+            try {
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `<h2>Book Details</h2>
+                        <p><strong>Title:</strong> ${data.title}</p>
+                        <p><strong>Authors:</strong> ${data.authors.join(', ')}</p>
+                        <p><strong>Publisher:</strong> ${data.publisher}</p>
+                        <p><strong>Published Date:</strong> ${data.publishedDate}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Failed to scan barcode: ${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
